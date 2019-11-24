@@ -8,7 +8,11 @@ steps:
     commands:
       - rdocker ${{RDOCKER_HOST}} docker stack deploy --compose-file docker-stack.yml ${{STACK_NAME}}
     environment:
-      - SSH_KEY=${{SSH_KEY}}
+#       - SSH_KEY=${{SSH_KEY}}
+        - SSH_KEY='/run/secrets/my_ssh_key'
+        - RDOCKER_HOST=$(cat /run/secrets/my_docker_host | tr '\n' ',')
+        - STACK_NAME='vote'
+        - SPLIT-CHAR=','
     when:
       branch:
         only:
